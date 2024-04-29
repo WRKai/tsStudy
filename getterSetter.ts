@@ -11,11 +11,13 @@ class Moxin {
 
     get z(): number {
         console.log('触发了getter')
+        console.log('触发了getter111')
         return this._z
     }
 
     public set z(v: number) {
         console.log('触发了setter')
+        console.log('触发了setter222')
         this._z = v;
     }
 
