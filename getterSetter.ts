@@ -26,3 +26,5 @@ class Moxin {
 let moxin = new Moxin(1, 2)
 moxin.z = 3
 console.log(moxin.z)
+
+console.log("我是傻逼")
