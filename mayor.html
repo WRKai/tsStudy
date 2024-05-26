@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #ck {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="checkbox" checked id="ck">
+    <button id="btn">点击变化</button>
+    <script>
+        const ck = document.querySelector('#ck'),
+            btn = document.querySelector('#btn')
+        btn.addEventListener('click', e => {
+            ck.checked = !ck.checked;
+        })
+        // ck.addEventListener('change', e => {
+        //     console.log(e.target.checked)
+        //     e.target.checked = !e.target.checked;
+        // })
+        ck.addEventListener('click', e => {
+            e.preventDefault()
+            setTimeout(f => console.log(e.target.checked), 0);
+        })
+    </script>
+</body>
+
+</html>

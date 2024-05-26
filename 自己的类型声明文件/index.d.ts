@@ -1,3 +1,3 @@
-type Props={x:number,y:number}
+type Props = { x: number, y: number }
 // 导出类型
-export {Props} 
+export { Props } 

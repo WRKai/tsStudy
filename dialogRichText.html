@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>富文本框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 500px;
+            margin: 0 auto;
+            /* display: flex; */
+        }
+
+        .wrapper * {
+            margin-bottom: 10px;
+        }
+
+        .inp {
+            border: 1px solid #ccc;
+            min-height: 200px;
+            border-radius: 2px;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+
+        .blod {
+            font-weight: bold;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="checkboxes">
+            <label>下划线<input type="checkbox" id="underline"></label>
+            <label>加粗<input type="checkbox" id="blod"></label>
+            <label>斜体<input type="checkbox" id="italic"></label>
+        </div>
+        <div class="radio-group">
+            <label>红色<input type="radio" id="red" name="color"></label>
+            <label>黑色<input type="radio" id="black" name="color"></label>
+            <label>蓝色<input type="radio" id="blue" name="color"></label>
+        </div>
+        <div contenteditable class="inp"></div>
+        <button id="clear">清空</button>
+    </div>
+    <script>
+        const checkboxes = document.querySelector('.checkboxes')
+            , radioGroup = document.querySelector('.radio-group')
+            , inp = document.querySelector('.inp')
+        checkboxes.addEventListener('click', e => {
+            if (!e.target.id) return
+            if (e.target.checked) inp.classList.add(e.target.id)
+            else inp.classList.remove(e.target.id)
+        })
+        radioGroup.addEventListener('click', e => {
+            if (!e.target.id) return
+            inp.style.color = e.target.id
+        })
+        document.querySelector('#clear').onclick = f => inp.innerHTML = ''
+    </script>
+</body>
+
+</html>

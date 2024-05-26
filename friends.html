@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        ; (async f => {
+            const domParser = new DOMParser()
+            const space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            const users = document.querySelector('div#pageContent').querySelectorAll('a.rated-user')
+            const sleep = t => new Promise(resolve => setTimeout(resolve, t))
+            for (const user of users) {
+                fetch(user.href).then(res => {
+                    res.text().then(text => {
+                        const doc = domParser.parseFromString(text, "text/html")
+                        const lis = doc.querySelector('div.info').querySelectorAll('li')
+                        for (const li of lis) {
+                            if (li.innerText.includes('Last')) {
+                                user.outerHTML = `${user.outerHTML} ${space} ${li.querySelector('span').outerHTML}`
+                                break
+                            }
+                        }
+                    })
+                })
+                await sleep(88 + Math.random() * 88)
+            }
+        })();
+    </script>
+</body>
+
+</html>

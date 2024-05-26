@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        (async f => {
+            //重要变量
+            let res, html
+            const activeGraph = document.querySelector('div#userActivityGraph')
+            let map = {}
+            const domParser = new DOMParser()
+            let key = '__codeforces_daily_ac_v2_'
+            const convertDate = date => {
+                const months = {
+                    'Jan': '01',
+                    'Feb': '02',
+                    'Mar': '03',
+                    'Apr': '04',
+                    'May': '05',
+                    'Jun': '06',
+                    'Jul': '07',
+                    'Aug': '08',
+                    'Sep': '09',
+                    'Oct': '10',
+                    'Nov': '11',
+                    'Dec': '12'
+                }, regex = /([A-Z][a-z][a-z])/
+                return date.replace(regex, (match, p1) => months[p1])
+            }
+            const filePaths = window.location.pathname.split('/'),
+                username = filePaths[filePaths.length - 1]
+                , URL = `https://codeforces.com/submissions/${username}/page`
+            key += username
+            let dataMapStr = localStorage.getItem(key), dataMap
+            const btn_render = document.createElement('button'),
+                btn_refresh = document.createElement('button'),
+                btn_all_refresh = document.createElement('button'),
+                prom_span = document.createElement('span'),
+                box = document.querySelector('div.roundbox.userActivityRoundBox.borderTopRound.borderBottomRound')
+            //fetch第一页数据
+            const fetchFirst = async f => {
+                res = await fetch(URL + '/1')
+                html = await res.text()
+            }
+            //解析DOM
+            const calc = (html, getTotalPages = false) => {
+                const doc = domParser.parseFromString(html, 'text/html')
+                const arr = doc.querySelectorAll('tr[data-submission-id]')
+                let totalPages = void 0
+                if (getTotalPages) {
+                    const lis = doc.querySelectorAll('div.pagination ul li')
+                    totalPages = parseInt(lis[lis.length - 2].innerText)
+                }
+                // arr.forEach(elem => {
+                //     if (elem.querySelector('span.verdict-accepted')) {
+                //         const date = convertDate(elem.querySelector('span.format-time').innerText.split(' ')[0])
+                //         if (!map[date])
+                //             map[date] = new Set()
+                //         map[date].add(parseInt(elem.querySelector('td[data-problemid]').dataset.problemid))
+                //     }
+                // })
+                for (const elem of arr) {
+                    if (!elem.querySelector('span.verdict-accepted')) continue
+                    const date = convertDate(elem.querySelector('span.format-time').innerText.split(' ')[0])
+                    if (!map[date])
+                        map[date] = new Set()
+                    map[date].add(parseInt(elem.querySelector('td[data-problemid]').dataset.problemid))
+
+                }
+                return totalPages
+            }
+            //渲染
+            const render = f => {
+                if (activeGraph) {
+                    for (const key in dataMap) {
+                        const rect = activeGraph.querySelector(`rect[data-date="${key}"]:not([fill="#EBEDF0"])`)
+                        if (!rect) continue
+                        rect.dataset.date = `${rect.dataset.date},Accept ${dataMap[key]}`
+                    }
+                }
+            }
+            //仅加载第一页
+            const loadOnePage = firstHtml => {
+                dataMap = JSON.parse(dataMapStr)
+                calc(firstHtml)
+                for (const key in map)
+                    map[key] = map[key].size
+                dataMap = {
+                    ...dataMap,
+                    ...map
+                }
+            }
+            //加载所有页
+            const loadAllPages = async firstHtml => {
+                const TOTAL_PAGES = calc(firstHtml, true)
+                for (let i = 2; i <= TOTAL_PAGES; ++i) {
+                    const res = await fetch(URL + '/' + i)
+                    const html = await res.text()
+                    calc(html)
+                }
+                for (const key in map)
+                    map[key] = map[key].size
+                dataMap = map
+                dataMapStr = JSON.stringify(map)
+                localStorage.setItem(key, dataMapStr)
+            }
+            //主函数
+            btn_render.innerText = '渲染'
+            btn_refresh.innerText = '单页获取数据'
+            btn_all_refresh.innerText = '强制获取全部数据'
+            btn_all_refresh.style.color = 'red'
+            prom_span.style.color = 'grey'
+            box.insertBefore(btn_render, box.firstChild)
+            box.insertBefore(btn_refresh, box.firstChild)
+            box.insertBefore(btn_all_refresh, box.firstChild)
+            box.insertBefore(prom_span, box.firstChild)
+            btn_render.addEventListener('click', f => render())
+            btn_refresh.addEventListener('click', async f => {
+                prom_span.innerText = '正在获取数据...'
+                map = {}
+                await fetchFirst()
+                loadOnePage(html)
+                render()
+                prom_span.innerText = '完成！'
+            })
+            btn_all_refresh.addEventListener('click', async f => {
+                if (!confirm('危险操作，确定获取全部数据吗？')) return
+                prom_span.innerText = '正在获取数据...'
+                map = {}
+                await fetchFirst()
+                await loadAllPages(html)
+                render()
+                prom_span.innerText = '完成！'
+            })
+            prom_span.innerText = '正在获取数据...'
+            await fetchFirst()
+            if (!dataMapStr) {
+                await loadAllPages(html)
+            } else {
+                loadOnePage(html)
+            }
+            prom_span.innerText = '完成！'
+            render()
+        })();
+    </script>
+</body>
+
+</html>
