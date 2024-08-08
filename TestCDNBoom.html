@@ -14,7 +14,7 @@
         }
         // define SRC_DOMAINS_MAPPING before
         window.addEventListener('error', e => {
-            if (e instanceof ErrorEvent || e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT') return;
+            if (e instanceof ErrorEvent || (e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT')) return;
             const name = e.target.dataset.name, nidx = ++SRC_DOMAINS_MAPPING[name][0], nsrc = SRC_DOMAINS_MAPPING[name][nidx];
             if (!nsrc) return;
             if (e.target.tagName === 'SCRIPT') document.write(`\<script data-name="${name}" src="${nsrc}"\>\<\/script\>`)
