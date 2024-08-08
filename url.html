@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- ./ <空> ../ 相对路径 -->
+    <!-- /(应用当前主机名、域名、协议) //(应用当前协议) -->
+    <script>
+        const BASE_URL = 'https://study.duyiedu.com'
+        // const xhr = new XMLHttpRequest()
+        // xhr.onreadystatechange = function () {
+        //     if (this.readyState === 4) {
+        //         const res = this.responseText
+        //         console.log(JSON.parse(res))
+        //     }
+        // }
+        // // xhr.setRequestHeader('', '')
+        // xhr.open('GET', `${BASE_URL}/api/herolist`)
+        // xhr.send(null)
+    </script>
+    <script>
+        // fetch(`${BASE_URL}/api/herolist`)
+        //     .then(resp => { // 获取响应头
+        //         // console.log(resp)
+        //         // console.log([...resp.headers.entries()])
+        //         console.log(resp.json().then(bd => { }))// 使用json/text方法获取响应体
+        //     })
+        // fetch(`${BASE_URL}/api/herolist`)
+        //     .then(resp => resp.json())
+        //     .then(({ data }) => console.log(data))
+        // ; (async f => {
+        //     const { data } = await (await fetch(`${BASE_URL}/api/herolist`)).json()
+        //     console.log(data)
+        // })();
+
+        // 完整写法：
+        // fetch('', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({})
+        // })
+    </script>
+</body>
+
+</html>

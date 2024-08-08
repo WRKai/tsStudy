@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="flex" style="display: flex;">
+        <img src="./hsq.jfif" alt="hsq">
+        <button>转换</button>
+        <canvas></canvas>
+    </div>
+    <script>
+        const img = document.querySelector('img'),
+            cvs = document.querySelector('canvas'),
+            btn = document.querySelector('button'),
+            ctx = cvs.getContext('2d')
+        img.onload = function () {
+            [cvs.width, cvs.height] = [this.width, this.height]
+        }
+        btn.onclick = () => {
+            ctx.drawImage(img, 0, 0)
+            const imgData = ctx.getImageData(0, 0, cvs.width, cvs.height)
+            for (let i = 0; i < imgData.data.length; i += 4) {
+                const rgbAvg = (imgData.data[i] + imgData.data[i + 1] + imgData.data[i + 2]) / 3
+                imgData.data[i] = imgData.data[i + 1] = imgData.data[i + 2] = rgbAvg
+            }
+            ctx.putImageData(imgData, 0, 0)
+        }
+    </script>
+</body>
+
+</html>

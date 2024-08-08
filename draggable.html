@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            height: 200px;
+            width: 200px;
+            background-color: lightskyblue;
+            position: absolute;
+        }
+
+        .target {
+            height: 300px;
+            width: 300px;
+            background-color: lightcoral;
+            margin: 0 auto;
+        }
+
+        ul {
+            width: 300px;
+            border: 1px solid #aaa;
+            margin: 0 auto;
+            padding: 0;
+            /* text-align: center; */
+        }
+
+        li {
+            height: 50px;
+            background-color: lightgreen;
+            margin: 10px;
+            list-style: none;
+        }
+
+        .target2 {
+            border: 1px solid #aaa;
+            height: 300px;
+            width: 300px;
+            background-color: lemonchiffon;
+            margin: 0 auto;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" draggable="true"></div>
+    <div class="target"></div>
+    <ul>
+        <li draggable="true">1</li>
+        <li draggable="true">2</li>
+        <li draggable="true">3</li>
+        <li draggable="true">4</li>
+        <li draggable="true">5</li>
+    </ul>
+    <div class="target2">
+
+    </div>
+    <script>
+        var draggingElem = null
+        document.querySelector('ul').addEventListener('dragstart', e => {
+            draggingElem = e.target
+            e.dataTransfer.effectAllowed = "link"
+        })
+        const target2 = document.querySelector('.target2')
+        target2.addEventListener('dragover', e => e.preventDefault())
+        target2.addEventListener('drop', e => {
+            e.dataTransfer.dropEffect = 'all'
+            target2.appendChild(draggingElem)
+        })
+    </script>
+
+    <script>
+        const box = document.querySelector('.box');
+        const target = document.querySelector('.target');
+        // draggable elem events(3)
+        box.addEventListener('dragstart', function (e) {
+            console.log('dragstart');
+        })
+        box.addEventListener('drag', function (e) {
+            console.log('drag');//频繁触发
+        })
+        box.addEventListener('dragend', function (e) {
+            console.log('dragend');
+        })
+        // target elem events(4)
+        target.addEventListener('dragenter', function (e) {
+            console.log('dragenter');
+        })
+        target.addEventListener('dragleave', function (e) {
+            console.log('dragleave');
+        })
+        target.addEventListener('dragover', function (e) {
+            e.preventDefault() // 所有元素拖拽放开的默认事件是回去，所以必须这样才能触发drop
+            console.log('dragover');// 频繁触发
+        })
+        target.addEventListener('drop', function (e) {
+            console.log('drop')
+        })
+    </script>
+</body>
+
+</html>

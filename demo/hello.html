@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>标题</title>
+    <style type="text/css">
+        div {
+            border: 1px solid blue;
+            padding: 2px;
+            margin: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="hello.css" />
+    <script>
+        let message = "字符串提示";
+        function showMSG(msg) {
+            alert(msg);
+        }
+    </script>
+    <script src="./demo.js"></script>
+</head>
+
+<body>
+    <h1 onclick="showMSG(message)">页面标题</h1>
+    <div>一个块容器</div>
+    <div>又一个块容器</div>
+    <p>这里是段落了，间距变大</p>
+    <div>一个块容器</div>
+    <div>
+        <div>
+            多层嵌套：
+            <div style="margin: 60px 0 10px 30px ;color:purple;">内部第一个</div>
+            <div>内部第二个</div>
+        </div>
+    </div>
+    <h4>4 级标题</h4>
+    <ul>
+        <li>
+            HTML
+        </li>
+        <li>
+            CSS
+        </li>
+        <li>
+            JavaScript
+        </li>
+    </ul>
+    <div>
+        <a href="https://www.shiyanlou.com" target="_blank">点击超链接跳转至实验楼首页</a>
+    </div>
+    <div>
+        <img src="https://static.shiyanlou.com/frontend/dist/img/9f43b00.svg" alt="" width="200" />
+    </div>
+    <script>
+        const COURSE_NUM = '08060214'
+            ; (async f => {
+                if ('Notification' in window) {
+                    if (Notification.permission !== 'granted') {
+                        Notification.requestPermission().then(function (permission) {
+                            if (permission === 'granted') {
+                                showNotification();
+                            }
+                        });
+                    } else {
+                        showNotification();
+                    }
+                }
+                function showNotification(title, msg) {
+                    new Notification(title ?? '监听通知', {
+                        body: msg ?? '启动监听',
+                        icon: 'https://www.jnu.edu.cn/_upload/tpl/00/f5/245/template245/images/home/logo2.svg'
+                    })
+                }
+                function Uint8ArrayToString(fileData) {
+                    let dataString = "";
+                    for (let i = 0; i < fileData.length; i++) {
+                        const byte = fileData[i]
+                        if (32 <= byte && byte <= 126)
+                            dataString += String.fromCharCode(byte);
+                    }
+                    return dataString
+                }
+                setInterval(test, 24567);
+                async function test() {
+                    //替换这里
+                    const res = await fetch("https://jwxk.jnu.edu.cn/xsxkapp/sys/xsxkapp/elective/programCourse.do", {
+                        "headers": {
+                            "accept": "application/json, text/javascript, */*; q=0.01",
+                            "accept-language": "zh-CN,zh;q=0.9",
+                            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                            "priority": "u=1, i",
+                            "sec-ch-ua": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Microsoft Edge\";v=\"126\"",
+                            "sec-ch-ua-mobile": "?0",
+                            "sec-ch-ua-platform": "\"Windows\"",
+                            "sec-fetch-dest": "empty",
+                            "sec-fetch-mode": "cors",
+                            "sec-fetch-site": "same-origin",
+                            "token": "157e13c3-b23a-4fff-aa12-4c513a67a648",
+                            "x-requested-with": "XMLHttpRequest"
+                        },
+                        "referrer": "https://jwxk.jnu.edu.cn/xsxkapp/sys/xsxkapp/*default/grablessons.do?token=157e13c3-b23a-4fff-aa12-4c513a67a648",
+                        "referrerPolicy": "strict-origin-when-cross-origin",
+                        "body": "querySetting=%7B%22data%22%3A%7B%22studentCode%22%3A%222022102170%22%2C%22campus%22%3A%222%22%2C%22electiveBatchCode%22%3A%22cc36cc156d7a4ae1b0cac67202edbfff%22%2C%22isMajor%22%3A%221%22%2C%22teachingClassType%22%3A%22FANKC%22%2C%22checkConflict%22%3A%222%22%2C%22checkCapacity%22%3A%222%22%2C%22queryContent%22%3A%22%22%7D%2C%22pageSize%22%3A%2210%22%2C%22pageNumber%22%3A%220%22%2C%22order%22%3A%22%22%7D",
+                        "method": "POST",
+                        "mode": "cors",
+                        "credentials": "include"
+                    });
+                    //
+                    let str = ''
+                    for await (const part of res.body)
+                        str += Uint8ArrayToString(part)
+                    const courseObj = JSON.parse(str)
+                    console.log(courseObj)
+                    const AI = courseObj.dataList.find(elem => elem.courseNumber === COURSE_NUM)
+                    if (!AI) return
+                    console.log(`检测：${AI.tcList[0].numberOfSelected}/${AI.tcList[0].classCapacity}`)
+                    if (+AI.tcList[0].classCapacity > +AI.tcList[0].numberOfSelected) {
+                        showNotification('抢课通知', 'AI来咯')
+                        // console.log('有课了')
+                    }
+                }
+            })();
+    </script>
+</body>
+
+
+</html>

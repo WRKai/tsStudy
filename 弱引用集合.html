@@ -7,10 +7,16 @@
     <title>Document</title>
 </head>
 
-<body style="background-color: lightskyblue;color: aqua;">
-    <img src="./svg-loaders/audio.svg">
-    <img src="./svg-loaders/bars.svg">
-    <img src="./svg-loaders/rings.svg">
+<body>
+    <script>
+        const set = new WeakSet()
+        let obj = {
+            name: '张三',
+            age: 12
+        }
+        set.add(obj)
+        obj = null
+    </script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ console.log(process.cwd());//指的是运行终端的pwd，与文件无关
 // setTimeout(() => {
 //     console.log("等待结束");
 // }, 2222);
-// process.exit()//退出
+// process.exit()//退出background
 console.log(process.argv)//dddd
 console.log(process.platform)//dddd
 // console.log(process.kill("id"))//dddd

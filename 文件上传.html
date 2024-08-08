@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <input type="file" id="fileInp">
+    <img src="" id="image">
+    <button type="button" id="btn">点击上传</button>
+</body>
+<script>
+    fileInp.addEventListener('change', function (e) {
+        const file = this.files[0]
+        const reader = new FileReader()
+        reader.onload = _ => image.src = reader.result
+        reader.readAsDataURL(file)
+    })
+    document.getElementById('btn').addEventListener('click', function () {
+        const formData = new FormData()
+        formData.append('image', fileInp.files[0])
+        fetch('http://localhost:8080/testLocalUpload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(res => { console.log(res) })
+    })
+</script>
+
+</html>

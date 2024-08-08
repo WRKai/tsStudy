@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const s1 = Symbol()
+        const s2 = Symbol('abc')
+        console.log(typeof s1, s2)
+        const hero = {
+            a: 100,
+            [s1]: 3 // 动态属性名
+        }
+        console.log(Symbol('a') === Symbol('a'))
+        console.log(Symbol.for('a') === Symbol.for('a'))
+        console.log(Symbol.for('a') === Symbol('a'))
+    </script>
+</body>
+
+</html>

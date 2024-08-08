@@ -1,11 +1,11 @@
 class Point3D {
-    x: number;
-    y: number;
+    x: number
+    y: number
     z: number
 }
 class Point2D {
-    x: number;
-    y: number;
+    x: number
+    y: number
 }
 // 多的赋值给少的，没毛病
 const p2: Point2D = new Point3D();

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        .box {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            /* margin-top: calc(-50%); */
+            /* margin-left: -100px; */
+            /* transition: all .6s; */
+            width: 200px;
+            height: 200px;
+            text-indent: 40px;
+            font-size: 20px;
+            position: absolute;
+            color: rgb(46, 65, 82);
+            padding: 1%;
+            background-color: rgba(41, 220, 178, 0.881);
+            border-radius: 3%;
+        }
+
+        .box:hover {
+            animation: animat1 1s infinite alternate;
+        }
+
+        @keyframes animat1 {
+            0% {
+                width: 200px;
+                height: 200px;
+                background-color: rgba(41, 220, 178, 0.881);
+                border-radius: 3%;
+            }
+
+            50% {
+                width: 280px;
+                height: 200px;
+                background-color: rgba(86, 145, 14, 0.881);
+                border-radius: 15%;
+            }
+
+            100% {
+                width: 280px;
+                height: 280px;
+                background-color: rgba(219, 96, 19, 0.991);
+                border-radius: 25%;
+            }
+        }
+
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: #d78fee;
+            transition: all .4s;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .menu {
+            --my-font-size: 20px;
+            font-size: var(--my-font-size);
+            text-indent: var(--my-font-size);
+            font-family: 'Courier New', Courier, monospace;
+            position: absolute;
+            width: 200px;
+            height: auto;
+            background-color: #454A51;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            color: aliceblue;
+            user-select: none;
+            padding-top: 1%;
+            padding-bottom: 1%;
+        }
+
+        .menu h3 {
+            padding-top: 3%;
+            padding-bottom: 3%;
+            cursor: pointer;
+        }
+
+        .menu ul {
+            --my-height: 0px;
+        }
+
+        .menu ul li {
+            transition: all .4s;
+            height: var(--my-height);
+            line-height: var(--my-height);
+            text-indent: calc(var(--my-font-size) * 2);
+            overflow: hidden;
+            background-color: #5A5F65;
+            cursor: default;
+        }
+
+        .ball {
+            transform: scale(1.3, 0.6);
+            animation: bounce .6s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(1.3, 0.71) translateY(200%);
+            }
+
+            100% {
+                transform: scale(0.71, 1.3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btns">
+        <button class="btn">按钮1</button>
+        <button class="btn">按钮2</button>
+        <button class="btn">按钮3</button>
+        <button class="btn">按钮4</button>
+        <button class="btn">按钮5</button>
+        <button class="btn">按钮6</button>
+        <button class="btn">按钮7</button><button class="btn">按钮8</button><button class="btn">按钮9</button><button
+            class="btn">按钮10</button><button class="btn">按钮11</button><button class="btn">按钮12</button><button
+            class="btn">按钮13</button><button class="btn">按钮14</button><button class="btn">按钮15</button><button
+            class="btn">按钮16</button><button class="btn">按钮17</button><button class="btn">按钮18</button><button
+            class="btn">按钮19</button><button class="btn">按钮20</button>
+    </div>
+    <!-- <input type="date">
+      -->
+    <!-- <ul>
+        <li class="li1"></li>
+        <li class="li2"></li>
+        <li class="li3"></li>
+        <li class="li4"></li>
+        <li class="li5"></li>
+        <li class="li6"></li>
+        <li class="li7"></li>
+        <li class="li8"></li>
+        <li class="li9"></li>
+        <li class="li10"></li>
+        <li class="li11"></li>
+        <li class="li12"></li>
+        <li class="li13"></li>
+        <li class="li14"></li>
+        <li class="li15"></li>
+        <li class="li16"></li>
+        <li class="li17"></li>
+        <li class="li18"></li>
+        <li class="li19"></li>
+        <li class="li20"></li>
+    </ul> -->
+    <!-- <img src="./moxin.jpg" alt="MOXINNB" style="width: 200px; -->
+    <!-- /* height: 100px;object-fit: none;border: 1px solid rgb(0, 0, 0);"> */ -->
+    <!-- <div class="box">
+        这是一个盒子点十六分酵素粉看来是比如比u覅看的看过你的覅你的覅看
+    </div> -->
+    <!-- <div class="ball"></div> -->
+    <!-- <div class="menu">
+        <div class="level">
+            <h3>菜单1</h3>
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+                <li>1-4</li>
+            </ul>
+        </div>
+        <div class="level">
+            <h3>菜单2</h3>
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+                <li>1-4</li>
+            </ul>
+        </div>
+        <div class="level">
+            <h3>菜单3</h3>
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+                <li>1-4</li>
+            </ul>
+        </div>
+        <div class="level">
+            <h3>菜单4</h3>
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+                <li>1-4</li>
+            </ul>
+        </div>
+    </div> -->
+    <script>
+        // const arr = Array(10).fill(0).map(_ => +(100 * Math.random()).toFixed(3))
+        // const target = ['.jpg', '.png']
+        // console.log(target.includes(''))
+        //     (() => { })
+        // // [].map({ name }=> {})
+        // console.log(arr)
+        // let name, age
+        const obj = {
+            name: 'moxin',
+            age: 10
+        };
+        const desc = Object.getOwnPropertyDescriptors(obj)
+        console.log(desc)
+        // ({ name, age } = obj)
+        // console.log(name, age)
+        // const btns = document.querySelectorAll('button'), res = []
+        // // for (const btn of btns) {
+        // //     res.push(btn.innerHTML)
+        // // }
+        // // const arr = Array.from(btns).map(btn => btn.innerHTML)
+        // const arr = [...btns].map(({ innerHTML: text }, index) => ({ index, text }))
+        // console.log(arr)
+        // const ball = document.querySelector('.ball')
+        // document.querySelector('html').addEventListener('click', e => {
+        //     // console.log(e.clientX, e.clientY)
+        //     ball.style.transform = `translate(${e.clientX - 50}px, ${e.clientY - 50}px)`
+        // })
+        // const VARNAME = '--my-height'
+        // // var convert = h => h === '0px' ? '30px' : '0px'
+        // const convert = {
+        //     '0px': '30px',
+        //     '30px': '0px'
+        // }
+        // const menu = document.querySelector('.menu')
+        //     , levels = menu.querySelectorAll('.level')
+        // menu.addEventListener('click', e => {
+        //     if (e.target.tagName === 'H3') {
+        //         levels.forEach(l => l.children[1].style.setProperty(VARNAME, '0px'))
+        //         const ul = e.target.nextElementSibling
+        //         ul.style.setProperty(VARNAME, convert[getComputedStyle(ul).getPropertyValue(VARNAME)])
+        //     }
+        // })
+    </script>
+</body>
+
+</html>

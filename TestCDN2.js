@@ -1,0 +1,1 @@
+console.log('TestCDN2.js');

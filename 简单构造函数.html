@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getAllargsConsturctor(clazz, ...propsName) {
+            return new Proxy(clazz, {
+                construct(targetClass, args) {
+                    const ins = Reflect.construct(targetClass, args)
+                    propsName.forEach((propName, index) => Reflect.set(ins, propName, args[index]))
+                    return ins
+                }
+            })
+        }
+        const A = getAllargsConsturctor(class { }, 'firstName', 'lastName', 'age')
+        console.log(new A('Mox', 'in', 3))
+        const iarr = new Int8Array([1, 2, 3])
+        console.log(iarr)
+        const buf = new ArrayBuffer()
+    </script>
+</body>
+
+</html>

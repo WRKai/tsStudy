@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function createFiboIter() {
+            let val1 = 0, val2 = 1
+            return {
+                next() {
+                    [val1, val2] = [val2, val1 + val2];
+                    return {
+                        value: val1,
+                        done: false
+                    }
+                }
+            }
+        }
+        const iter = createFiboIter()
+        const obj = {
+            a: 1,
+            b: 2,
+            c: 3,
+            [Symbol.iterator]() {
+                const keys = ['a', 'b', 'c']
+                let i = 0
+                return {
+                    next: () => ({
+                        value: [keys[i], this[keys[i++]]],
+                        done: i > keys.length
+                    })
+                }
+            }
+        }
+        // for (const [key, value] of obj) {
+        //     console.log(key, value)
+        // }
+        // ...
+        const arr = [1, 2, ...obj, 4, 5]
+        // 解构
+        const [a, b, ...rest] = obj
+        // console.log(a, b, rest)
+
+        function* genFunc() {
+            let val1 = 0, val2 = 1, param = void 0
+            while (1) {
+                [val1, val2] = [val2, val1 + val2];
+                param = yield* [val1, `等一下`, '再等一下']
+                // yield*准确上来说，是“展开”另一个生成器函数
+            }
+            // return 就结束了，值就是value，done: true 
+        }
+        const gen = genFunc()
+        function* genFunc2() {
+            let param = yield 'hello'
+            console.log(param)
+            param = yield* [`上一次参数${param}`, '再等一下']
+            console.log(param)
+            param = yield* [`上一次参数${param}`, '再等一下']
+        }
+        const gen2 = genFunc2()
+    </script>
+</body>
+
+</html>

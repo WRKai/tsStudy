@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        const SRC_DOMAINS_MAPPING = {
+            'vue': [0, "https://cdn.bootcdn.net/ajax/libs/vue/3.4.36/vue.global.prod.min.js"],
+            'element-plus': [0, "https://cdn.bootcdn.net/ajax/libs/element-plus/2.7.8/index.full.min.js"],
+            'axios': [0, "https://cdn.bootcdn.net/ajax/libs/axios/1.7.2/axios.min.js"],
+            'mock': [0, "https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock-min.js"],
+            'jquery': [0, "https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"],
+            'socket-io': [0, "https://cdn.bootcdn.net/ajax/libs/socket.io/4.7.5/socket.io.min.js"],
+            'element-plus-css': [0, "https://cdn.bootcdn.net/ajax/libs/element-plus/2.7.8/index.min.css"],
+        }
+        // define SRC_DOMAINS_MAPPING before
+        window.addEventListener('error', e => {
+            if (e instanceof ErrorEvent || e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT') return;
+            const name = e.target.dataset.name, nidx = ++SRC_DOMAINS_MAPPING[name][0], nsrc = SRC_DOMAINS_MAPPING[name][nidx];
+            if (!nsrc) return;
+            if (e.target.tagName === 'SCRIPT') document.write(`\<script data-name="${name}" src="${nsrc}"\>\<\/script\>`)
+            else {
+                const newLink = document.createElement('link');
+                newLink.setAttribute('data-name', name);
+                newLink.rel = 'stylesheet';
+                newLink.href = nsrc;
+                document.head.appendChild(newLink);
+            }
+        }, true);
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link data-name="element-plus-css" rel="stylesheet"
+        href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.7.8/index.min.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- -->
+    <script data-name="vue"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/vue/3.4.36/vue.global.prod.min.js"></script>
+    <script data-name="element-plus"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.7.8/index.full.min.js"></script>
+    <script data-name="axios" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/axios/1.7.2/axios.min.js"></script>
+    <script data-name="mock" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
+    <script data-name="jquery" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script data-name="socket-io"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+</body>
+
+</html>

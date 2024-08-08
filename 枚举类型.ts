@@ -1,8 +1,8 @@
 // 枚举声明：{枚举命名常量(枚举成员),...args}
-enum Direction {Up, Down, Left, Right}
+enum Direction { Up, Down, Left, Right }
 // 本质是number
-function move(direction: Direction){
-console.log(direction);
+function move(direction: Direction) {
+    console.log(direction);
 
 }
 // 访问枚举成员？
@@ -22,3 +22,4 @@ enum campus {
     zjut3 = 'zjut3'
 }
 // 整个枚举本质上（在js中）是一个对象
+

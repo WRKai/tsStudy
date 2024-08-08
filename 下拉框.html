@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            height: 5000px;
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .select {
+            --select-button-height: 40px;
+            --select-button-width: 120px;
+            width: var(--select-button-width);
+            height: var(--select-button-height);
+            position: relative;
+        }
+
+        .select .button {
+            text-align: center;
+            padding-right: 20px;
+            width: var(--select-button-width);
+            height: var(--select-button-height);
+            line-height: var(--select-button-height);
+            font-size: 18px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            user-select: none;
+        }
+
+        .select .button::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 16px;
+            left: 100px;
+            transform-origin: center center;
+            transform: rotate(-135deg);
+            border: 2px solid gray;
+            border-left: none;
+            border-top: none;
+            transition: .3s;
+        }
+
+        .select .button:hover::after {
+            transform: rotate(45deg);
+        }
+
+        .select .button:hover+.scroll-down,
+        .scroll-down:hover {
+            transform: scaleY(1);
+        }
+
+        .scroll-down {
+            z-index: 999;
+            --row-height: 60px;
+            --offset: 0px;
+            display: grid;
+            grid-template-rows: repeat(8, var(--row-height));
+            transform-origin: center top;
+            transform: scaleY(0);
+            grid-auto-flow: column;
+            justify-items: center;
+            position: relative;
+            top: 15px;
+            background: #fff;
+            gap: 10px 20px;
+            padding: 10%;
+            box-shadow: 0 0 6px gray;
+            border-radius: 10px;
+            border: 1px solid gray;
+            transition: .3s;
+            width: fit-content;
+        }
+
+        .scroll-down::after {
+            content: '';
+            top: -12px;
+            left: var(--offset);
+            width: 20px;
+            height: 20px;
+            border: 1px solid gray;
+            border-bottom: none;
+            border-right: none;
+            background-color: #fff;
+            transform: rotate(45deg);
+            position: absolute;
+            /* background-color: red; */
+
+        }
+
+        .scroll-down .option {
+            border-radius: 10px;
+            background-color: inherit;
+            line-height: var(--row-height);
+            transition: .3s;
+        }
+
+        .scroll-down .option.active {
+            background-color: rgb(136, 255, 0);
+        }
+
+        .scroll-down .option:hover {
+            box-shadow: 0 0 4px 4px #eee;
+            cursor: pointer;
+            user-select: none;
+            -webkit-userselect: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="select">
+        <div class="button">
+            请选择
+        </div>
+        <div class="scroll-down">
+            <div class="option active">option1</div>
+            <div class="option">option2</div>
+            <div class="option">option3</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+        </div>
+    </div>
+    <div class="select">
+        <div class="button">
+            请选择
+        </div>
+        <div class="scroll-down">
+            <div class="option active">option1</div>
+            <div class="option">option2</div>
+            <div class="option">option3</div>
+        </div>
+    </div>
+    <div class="select">
+        <div class="button">
+            请选择
+        </div>
+        <div class="scroll-down">
+            <div class="option active">option1</div>
+            <div class="option">option2</div>
+            <div class="option">option3</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option4</div>
+            <div class="option">option5</div>
+            <div class="option">option4</div>
+            <div class="option">option6</div>
+        </div>
+    </div>
+    <script>
+        const btns = document.querySelectorAll('.select>.button')
+        for (const btn of btns) {
+            btn.addEventListener('mouseenter', function (e) {
+                const off = this.clientLeft + this.clientWidth / 2
+                this.nextElementSibling.style.setProperty('--offset', off + 'px')
+            })
+        }
+    </script>
+    </script>
+</body>
+
+</html>
