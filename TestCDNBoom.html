@@ -3,7 +3,7 @@
 
 <head>
     <script>
-        const SRC_DOMAINS_MAPPING = {
+        const CDN_DOMAINS_MAPPING = {
             'vue': [0, "https://cdn.bootcdn.net/ajax/libs/vue/3.4.36/vue.global.prod.min.js"],
             'element-plus': [0, "https://cdn.bootcdn.net/ajax/libs/element-plus/2.7.8/index.full.min.js"],
             'axios': [0, "https://cdn.bootcdn.net/ajax/libs/axios/1.7.2/axios.min.js"],
@@ -12,10 +12,10 @@
             'socket-io': [0, "https://cdn.bootcdn.net/ajax/libs/socket.io/4.7.5/socket.io.min.js"],
             'element-plus-css': [0, "https://cdn.bootcdn.net/ajax/libs/element-plus/2.7.8/index.min.css"],
         }
-        // define SRC_DOMAINS_MAPPING before
+        // define CDN_DOMAINS_MAPPING before
         window.addEventListener('error', e => {
             if (e instanceof ErrorEvent || (e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT')) return;
-            const name = e.target.dataset.name, nidx = ++SRC_DOMAINS_MAPPING[name][0], nsrc = SRC_DOMAINS_MAPPING[name][nidx];
+            const name = e.target.dataset.name, nidx = ++CDN_DOMAINS_MAPPING[name][0], nsrc = CDN_DOMAINS_MAPPING[name][nidx];
             if (!nsrc) return;
             if (e.target.tagName === 'SCRIPT') document.write(`\<script data-name="${name}" src="${nsrc}"\>\<\/script\>`)
             else {
