@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- 注入CDN重试 -->
+    <script>
+        var scriptLoadCnt = 0
+        function loadScript() {
+            if (++scriptLoadCnt === 10) {
+                const moduleScript = document.createElement('script');
+                moduleScript.src = "./yourSRC.js";
+                moduleScript.type = 'module'
+                moduleScript.crossOrigin = "anonymous";
+                document.head.appendChild(moduleScript);
+            }
+        }
+        const CDN_DOMAINS_MAPPING = {
+            'element-plus-css': [0, "https://cdnjs.loli.net/ajax/libs/element-plus/2.8.1/index.min.css", "https://cdnjs.cloudflare.com/ajax/libs/element-plus/2.9.1/index.min.css"],
+            axios: [0, "https://cdnjs.loli.net/ajax/libs/axios/1.7.5/axios.min.js", "https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"],
+            JSEncrypt: [0, "https://cdnjs.loli.net/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"],
+            Qs: [0, "https://cdnjs.loli.net/ajax/libs/qs/6.13.0/qs.min.js", "https://cdnjs.cloudflare.com/ajax/libs/qs/6.13.1/qs.min.js"],
+            ReconnectingWebSocket: [0, "https://unpkg.com/reconnecting-websocket@4.4.0/dist/reconnecting-websocket-iife.min.js"],
+            Vue: [0, "https://cdn.bootcdn.net/ajax/libs/vue/3.5.13/vue.runtime.global.prod.min.js", "https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.runtime.global.prod.min.js", "https://unpkg.com/vue@3.5.13/dist/vue.runtime.global.prod.js", "https://cdnjs.loli.net/ajax/libs/vue/3.4.38/vue.runtime.global.prod.min.js"],
+            VueDemi: [0, "https://cdnjs.loli.net/ajax/libs/vue-demi/0.14.10/index.iife.min.js", "https://cdnjs.cloudflare.com/ajax/libs/vue-demi/0.14.10/index.iife.min.js"],
+            ElementPlus: [0, "https://cdnjs.loli.net/ajax/libs/element-plus/2.8.1/index.full.min.js", "https://cdnjs.cloudflare.com/ajax/libs/element-plus/2.9.1/index.full.min.js"],
+            ElementPlusIconsVue: [0, "https://cdnjs.loli.net/ajax/libs/element-plus-icons-vue/2.3.1/global.iife.min.js", "https://cdnjs.cloudflare.com/ajax/libs/element-plus-icons-vue/2.3.1/global.iife.min.js"],
+            Pinia: [0, "https://cdnjs.loli.net/ajax/libs/pinia/2.2.2/pinia.iife.prod.min.js", "https://cdnjs.cloudflare.com/ajax/libs/pinia/2.3.0/pinia.iife.prod.min.js"],
+            VueRouter: [0, "https://cdnjs.loli.net/ajax/libs/vue-router/4.4.3/vue-router.global.prod.min.js", "https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.5.0/vue-router.global.prod.min.js"]
+        }
+        window.addEventListener('error', e => {
+            if (e instanceof ErrorEvent || (e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT'))
+                return;
+            const { name } = e.target.dataset
+            const nidx = ++CDN_DOMAINS_MAPPING[name][0]
+            const nsrc = CDN_DOMAINS_MAPPING[name][nidx]
+            if (!nsrc)
+                return;
+            if (e.target.tagName === 'SCRIPT' && !e.target.defer)
+                document.write(`\<script onload="loadScript()" data-name="${name}" src="${nsrc}"\>\<\/script\>`)
+            else if (e.target.defer) {
+                const newDeferScript = document.createElement('script');
+                newDeferScript.dataset.name = name;
+                newDeferScript.src = nsrc;
+                newDeferScript.defer = true;
+                newDeferScript.setAttribute('onload', 'loadScript()');
+                document.head.appendChild(newDeferScript);
+            }
+            else {
+                const newLink = document.createElement('link');
+                newLink.dataset.name = name;
+                newLink.rel = 'stylesheet';
+                newLink.href = nsrc;
+                document.head.appendChild(newLink);
+            }
+        }, true)
+    </script>
+    <!-- 无依赖 -->
+    <link data-name="element-plus-css" rel="stylesheet"
+        href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.8.2/index.min.css" />
+    <!-- ！！补充自己的样式文件！！ -->
+    <script onload="loadScript()" data-name="axios" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script onload="loadScript()" data-name="JSEncrypt" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+    <script onload="loadScript()" data-name="Qs" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/qs/6.13.0/qs.min.js"></script>
+    <script onload="loadScript()" data-name="ReconnectingWebSocket" defer
+        src="https://code.bdstatic.com/npm/reconnecting-websocket@4.4.0/dist/reconnecting-websocket-iife.min.js"></script>
+
+    <!-- 依赖 -->
+    <script onload="loadScript()" data-name="Vue"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/vue/3.5.4/vue.runtime.global.prod.min.js"></script>
+    <script onload="loadScript()" data-name="VueDemi"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/vue-demi/0.14.10/index.iife.min.js"></script>
+
+    <!-- 需要依赖 -->
+    <script onload="loadScript()" data-name="ElementPlus" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.8.2/index.full.min.js"></script>
+    <script onload="loadScript()" data-name="ElementPlusIconsVue" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus-icons-vue/2.3.1/global.iife.min.js"></script>
+    <script onload="loadScript()" data-name="Pinia" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/pinia/2.2.2/pinia.iife.prod.min.js"></script>
+    <script onload="loadScript()" data-name="VueRouter" defer
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/vue-router/4.4.4/vue-router.global.prod.min.js"></script>
+    <!-- 结束注入CDN重试  -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- -->
+    <!-- <script data-name="vue"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/vue/3.4.36/vue.global.prod.min.js"></script>
+    <script data-name="element-plus"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.7.8/index.full.min.js"></script>
+    <script data-name="axios" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/axios/1.7.2/axios.min.js"></script>
+    <script data-name="mock" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
+    <script data-name="jquery" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script data-name="socket-io"
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script> -->
+</body>
+
+</html>

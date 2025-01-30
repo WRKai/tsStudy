@@ -1,3 +1,5 @@
-console.log("NBTS666");
-const numbers:number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-console.log(numbers);
+const reg = /(<i>|<\/i>)/g
+const str = 'This is a <i>test</i> string with <i>multiple</i> <i>tags</i>'
+
+const matches = str.replace(reg, '')
+console.log(matches)

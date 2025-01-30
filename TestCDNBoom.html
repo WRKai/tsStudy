@@ -3,40 +3,78 @@
 
 <head>
     <script>
+        var scriptLoadCnt = 0, moduleJs = ''
+        fetch('./module.js').then(r => r.text()).then(t => moduleJs = t)
+        function loadScript() {
+            if (++scriptLoadCnt === 4) {
+                // const moduleScript = document.createElement('script');
+                // moduleScript.src = "./module.js";
+                // moduleScript.type = 'module'
+                // document.head.appendChild(moduleScript);
+                function loadModule() {
+                    if (!moduleJs)
+                        setTimeout(loadModule, 50)
+                    const moduleScript = document.createElement('script');
+                    moduleScript.innerHTML = moduleJs;
+                    moduleScript.type = 'module'
+                    document.head.appendChild(moduleScript);
+                }
+                loadModule()
+            }
+        }
         const CDN_DOMAINS_MAPPING = {
-            'vue': [0, "https://cdn.bootcdn.net/ajax/libs/vue/3.4.36/vue.global.prod.min.js"],
-            'element-plus': [0, "https://cdn.bootcdn.net/ajax/libs/element-plus/2.7.8/index.full.min.js"],
-            'axios': [0, "https://cdn.bootcdn.net/ajax/libs/axios/1.7.2/axios.min.js"],
-            'mock': [0, "https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock-min.js"],
-            'jquery': [0, "https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"],
-            'socket-io': [0, "https://cdn.bootcdn.net/ajax/libs/socket.io/4.7.5/socket.io.min.js"],
-            'element-plus-css': [0, "https://cdn.bootcdn.net/ajax/libs/element-plus/2.7.8/index.min.css"],
+            1: [0, './TestCDN1.js'],
+            2: [0, './TestCDN2.js'],
+            3: [0, './TestCDN3.js'],
+            "defer1": [0, './defer1.js'],
+            "css": [0, './TestCDNCSS.css']
         }
         // define CDN_DOMAINS_MAPPING before
         window.addEventListener('error', e => {
-            if (e instanceof ErrorEvent || (e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT')) return;
-            const name = e.target.dataset.name, nidx = ++CDN_DOMAINS_MAPPING[name][0], nsrc = CDN_DOMAINS_MAPPING[name][nidx];
-            if (!nsrc) return;
-            if (e.target.tagName === 'SCRIPT') document.write(`\<script data-name="${name}" src="${nsrc}"\>\<\/script\>`)
+            if (e instanceof ErrorEvent || (e.target.tagName !== 'LINK' && e.target.tagName !== 'SCRIPT'))
+                return;
+            const { name } = e.target.dataset
+            const nidx = ++CDN_DOMAINS_MAPPING[name][0]
+            const nsrc = CDN_DOMAINS_MAPPING[name][nidx]
+            if (!nsrc)
+                return;
+            if (e.target.tagName === 'SCRIPT' && !e.target.defer)
+                document.write(`\<script onload="loadScript()" data-name="${name}" src="${nsrc}"\>\<\/script\>`)
+            else if (e.target.defer) {
+                const newDeferScript = document.createElement('script');
+                newDeferScript.dataset.name = name;
+                newDeferScript.src = nsrc;
+                newDeferScript.defer = true;
+                newDeferScript.setAttribute('onload', 'loadScript()');
+                document.head.appendChild(newDeferScript);
+            }
             else {
                 const newLink = document.createElement('link');
-                newLink.setAttribute('data-name', name);
+                newLink.dataset.name = name;
                 newLink.rel = 'stylesheet';
                 newLink.href = nsrc;
                 document.head.appendChild(newLink);
             }
         }, true);
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded')
+        })
     </script>
+    <script onload="loadScript()" data-name="1" src="./TestCDN11.js"></script>
+    <script onload="loadScript()" data-name="2" src="./TestCDN22.js"></script>
+
+    <script onload="loadScript()" data-name="defer1" defer src="./fakedefer1.js"></script>
+    <script onload="loadScript()" data-name="defer2" defer src="./defer2.js"></script>
+    <link data-name="css" rel="stylesheet" href="./faker.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link data-name="element-plus-css" rel="stylesheet"
-        href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.7.8/index.min.css" />
     <title>Document</title>
 </head>
 
 <body>
+    <h1>AC</h1>
     <!-- -->
-    <script data-name="vue"
+    <!-- <script data-name="vue"
         src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/vue/3.4.36/vue.global.prod.min.js"></script>
     <script data-name="element-plus"
         src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/element-plus/2.7.8/index.full.min.js"></script>
@@ -44,7 +82,7 @@
     <script data-name="mock" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
     <script data-name="jquery" src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script data-name="socket-io"
-        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+        src="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script> -->
 </body>
 
 </html>

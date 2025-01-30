@@ -6,3 +6,5 @@ function weigh(balls) {
     weigh(balls.slice, l, r / 2);
     weigh(balls, r / 2, r - 1);
 }
+
+const elem = document.createElement('link')
